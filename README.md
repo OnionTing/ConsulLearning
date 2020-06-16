@@ -47,6 +47,46 @@ Run below command to initilize the Terraform:
 
 '$ terraform init'
 
+Run below command to plan 
+
+'$ terraform plan'
+
 Run below command to apply Terraform to set up the cluster. 
 
 '$ terraform apply'
+
+6. ### Enable the K8S dashboard
+In order to use K8S dashboard, you need to create a 'ClusterRoleBinding'. Run below command line: 
+
+'$ kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard'
+
+You will get an output - 'clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created'
+
+Enable the kube-dashboard addon for the resource group "Ting_AKS_Demo", cluster name "Ting_AKS_Demo".
+
+'$ az aks enable-addons --addons kube-dashboard --resource-group Ting_AKS_Demo --name Ting_AKS_Demo'
+
+Press 'Ctrl + C' to exit.
+
+Enter below commande line to view the Kubernetes dashboard, and the Kubernetes dashboard will open in your web browser. 
+
+'$ az aks browse --resource-group Ting_AKS_Demo --name Ting_AKS_Demo'
+
+-----
+## AKS/consul
+
+Consul can run directly on Kubernetes, both in server or client mode. In this demo, We are going to use Helm-chart (Helm 3) to run Consul inside Kubernetes. 
+
+1. ### pre-steps
+Go to the 'consul' directory of the repo:
+
+'$ cd ~/AKS/consul
+
+2. ### Install Consul with Helm-chart 
+Run below command to add the HashiCorp Helm Repository
+
+'$ helm repo add hashicorp https://helm.releases.hashicorp.com'
+
+Ensure you have access to the consul chart: 
+
+'$ helm search repo hashicorp/consul'

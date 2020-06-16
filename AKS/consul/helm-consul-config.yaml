@@ -1,0 +1,23 @@
+# use this yaml file to customize the installation.
+global:
+  datacenter: AKSDemoDC1
+  name: Ting_AKS_Demo
+
+ui:
+  service:
+    type: "LoadBalancer"
+
+connectInject:
+  enabled: true
+
+client:
+  enabled: true
+  # agents will enable GRPC listener on port 8502 and expose it to the host. Required for Connect.
+  grpc: true
+
+server:
+  replicas: 1
+  bootstrapExpect: 1
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0
