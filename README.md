@@ -33,7 +33,7 @@ You will get the following info, please save them to be used later.
 4.  ### glone the repo 
 Clone the repo and modify the "variables.tfvars" file.
 
-'git clone https://github.com/xxxxx.git' 
+'$ git clone https://github.com/OnionTing/ConsulLearning.git' 
 
 'cd AKS/terraform_basic'
 
