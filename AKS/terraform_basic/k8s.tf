@@ -3,6 +3,11 @@ resource "azurerm_resource_group" "k8s" {
     # manage a resource group named "k8s"
     name = var.resource_group_name
     location = var.location
+
+    tags = {
+        name = "Ting_AkS_Demo"
+        Enviroment = "Demo"
+    }
 }
 
 # The resource "random_id generate random numbers that are intended 
@@ -12,20 +17,7 @@ resource "random_id" "log_analytics_workspace_name_sufffix" {
     byte_length = 8
 }
 
-# Manages a Log Analytics Workspace to enable monitoring perf of workloads that deployed to K8S.
-resource "azurerm_log_analytics_workspace" "test" {
-    # The workspace name has to be unique across the whole of Azure.
-    name = "${var.log_analytics_workspace_name}-${random_id.log_analytics_workspace_name_sufffix.dec}"
-    location = var.log_analytics_workspace_location
-    resource_group_name = azurerm_resource_group.k8s.name
-    # workspace_resource_id = azurerm_log_analytics_workspace.test.id
-    # workspace_name = azurerm_log_analytics_workspace.test.name
 
-    # plan {
-        # publisher = "Microsoft"
-        # product = "OMSGallery/ContainerInsights"
-    # }
-}
 
 # Manage a AKS cluster
 resource "azurerm_kubernetes_cluster" "k8s"{
@@ -34,18 +26,13 @@ resource "azurerm_kubernetes_cluster" "k8s"{
     resource_group_name = azurerm_resource_group.k8s.name
     dns_prefix = var.dns_prefix
 
-    #linux_profile {
-            #admin_username = "ubuntu"
-
-            #ssh_key {
-                #key_data = file(var.ssh_public_key)
-            #}
-    #}
-
-    default_node_pool {
-        name = "agentpool"
-        node_count = var.agent_count
-        vm_size = var.agent_size
+   
+    agent_pool_profile {
+        name = "default"
+        count = 2
+        vm_size = "Standard_D2_v2"
+        os_type = "Linux"
+        os_disk_size_gb = 30
     }
 
     # One of either identity or service_principal must be specified.
@@ -59,18 +46,19 @@ resource "azurerm_kubernetes_cluster" "k8s"{
     enabled = true
   }
 
-    # Enable the monitoring add-on profile.
-    addon_profile {
-        oms_agent {
-            enabled = true
-            log_analytics_workspace_id = azurerm_log_analytics_workspace.test.id
-        }
-    }
+
 
     tags = {
         Name = "Ting_AkS_Demo"
         Enviroment ="Demo"
     }
 
+    provisioner "local-exec" {
+        # Load credentials to local environment so subsequent kubectl commands can be run
+        command = <<EOS
+        az aks get-credentials --resource-group ${azurerm_resource_group.k8s.name} --name ${self.name};
+    EOS
+
+    }
 
 }

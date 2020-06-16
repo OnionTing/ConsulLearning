@@ -1,5 +1,9 @@
 # Define the values that will be highlighted to the user when Terrafrom applies a plan. 
 # It can be queried using "terrafrom output" cli.
+output "resource_group_name" {
+    value = azurerm_resource_group.k8s.name
+}
+
 output "client_key" {
     value = azurerm_kubernetes_cluster.k8s.kube_config.0.client_key
 }

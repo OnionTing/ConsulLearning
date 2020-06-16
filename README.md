@@ -35,7 +35,9 @@ Clone the repo and modify the "variables.tfvars" file.
 
 '$ git clone https://github.com/OnionTing/ConsulLearning.git' 
 
-'cd AKS/terraform_basic'
+'cd ConsulLearning/AKS/terraform_basic'
+
+'code variables.tfvars'
 
 Please use the "appId", "password" to fill in the according value in the "variables.tfvars" file.
 
