@@ -1,6 +1,14 @@
 # Define the var
-variable "client_id" {}
-variable "client_secret" {}
+
+# fill in with the appId
+variable "client_id" {
+    default = ""
+}
+
+#fill in with the password
+variable "client_secret" {
+    default = ""
+}
 
 variable "agent_count" {
     default = 3
@@ -19,15 +27,15 @@ variable "dns_prefix" {
 }
 
 variable cluster_name {
-    default = "k8stest"
+    default = "Ting_k8sDemo"
 }
 
 variable resource_group_name {
-    default = "azure-k8stest"
+    default = "Ting_azure-k8stest"
 }
 
 variable location {
-    default = "Central US"
+    default = "West US 2"
 }
 
 variable log_analytics_workspace_name {

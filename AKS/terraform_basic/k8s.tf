@@ -55,6 +55,10 @@ resource "azurerm_kubernetes_cluster" "k8s"{
         client_secret = var.client_secret
     }
 
+    role_based_access_control {
+    enabled = true
+  }
+
     # Enable the monitoring add-on profile.
     addon_profile {
         oms_agent {
@@ -65,7 +69,7 @@ resource "azurerm_kubernetes_cluster" "k8s"{
 
     tags = {
         Name = "Ting_AkS_Demo"
-        Enviroment ="Development"
+        Enviroment ="Demo"
     }
 
 
