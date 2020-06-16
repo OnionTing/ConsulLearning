@@ -27,11 +27,10 @@ resource "azurerm_kubernetes_cluster" "k8s"{
     dns_prefix = var.dns_prefix
 
    
-    agent_pool_profile {
+    default_node_pool {
         name = "default"
-        count = 2
+        node_count = 2
         vm_size = "Standard_D2_v2"
-        os_type = "Linux"
         os_disk_size_gb = 30
     }
 

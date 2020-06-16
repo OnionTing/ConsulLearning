@@ -15,7 +15,7 @@ variable "ssh_public_key" {
 }
 
 variable "dns_prefix" {
-    default = "Ting_AKS_Demo"
+    default = "TingAKSDemo"
 }
 
 variable "cluster_name" {
